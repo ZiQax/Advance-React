@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../contexts/firebaseConfig";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -14,17 +14,19 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    // Validasi konfirmasi password
     if (password !== confirmPassword) {
       setError("Kata sandi tidak cocok!");
       return;
     }
-    
+
     setLoading(true);
     setError("");
-    
+
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
+      navigate("/dashboard"); // Redirect ke dashboard setelah registrasi berhasil
     } catch (err) {
       console.error(err.code, err.message);
       setError("Gagal mendaftar. Coba lagi!");
@@ -36,10 +38,10 @@ const Register = () => {
   const handleGoogleRegister = async () => {
     const provider = new GoogleAuthProvider();
     setLoading(true);
-    
+
     try {
       await signInWithPopup(auth, provider);
-      navigate("/dashboard");
+      navigate("/dashboard"); // Redirect ke dashboard setelah login Google berhasil
     } catch (err) {
       setError("Gagal mendaftar dengan Google. Coba lagi!");
     } finally {
@@ -89,8 +91,8 @@ const Register = () => {
               required
             />
           </div>
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded flex justify-center items-center"
             disabled={loading}
           >
@@ -102,6 +104,7 @@ const Register = () => {
           </button>
         </form>
 
+        {/* Tombol Daftar dengan Google */}
         <div className="mt-4">
           <button
             onClick={handleGoogleRegister}
@@ -112,10 +115,17 @@ const Register = () => {
             {loading ? "Menghubungkan..." : "Daftar dengan Google"}
           </button>
         </div>
+
+        {/* Tombol Login */}
+        <p className="text-center text-gray-400 mt-4">
+          Sudah punya akun?{" "}
+          <Link to="/login" className="text-blue-400 hover:text-blue-600">
+            Login di sini
+          </Link>
+        </p>
       </div>
     </div>
   );
 };
 
 export default Register;
-

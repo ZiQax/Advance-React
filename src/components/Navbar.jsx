@@ -131,11 +131,14 @@ const Navbar = () => {
           </div>
         </div>
       ) : (
-        <div className="hidden md:flex space-x-6">
-          <Link to="/" className="hover:text-gray-400">Home</Link>
-          <Link to="#" className="hover:text-gray-400">Tentang</Link>
-          <Link to="#" className="hover:text-gray-400">Kontak</Link>
-        </div>
+        // Tampilkan link "Home", "Tentang", dan "Kontak" hanya jika tidak di halaman login
+        location.pathname !== "/login" && (
+          <div className="hidden md:flex space-x-6">
+            <Link to="/" className="hover:text-gray-400">Home</Link>
+            <Link to="#" className="hover:text-gray-400">Tentang</Link>
+            <Link to="#" className="hover:text-gray-400">Kontak</Link>
+          </div>
+        )
       )}
 
       {/* Profile & Logout Button Setelah Login (Desktop) */}
@@ -177,12 +180,15 @@ const Navbar = () => {
           )}
         </div>
       ) : (
-        <button
-          className="hidden md:block ml-4 bg-blue-500 px-4 py-2 rounded hover:bg-blue-600"
-          onClick={() => navigate("/login")}
-        >
-          Login
-        </button>
+        // Tampilkan tombol "Login" hanya jika tidak di halaman login
+        location.pathname !== "/login" && (
+          <button
+            className="hidden md:block ml-4 bg-blue-500 px-4 py-2 rounded hover:bg-blue-600"
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </button>
+        )
       )}
 
       {/* Mobile Menu Button */}
@@ -251,11 +257,14 @@ const Navbar = () => {
               </div>
             </>
           ) : (
-            <>
-              <Link to="/" className="hover:text-gray-400 px-4 py-2" onClick={handleMobileLinkClick}>Home</Link>
-              <Link to="#" className="hover:text-gray-400 px-4 py-2" onClick={handleMobileLinkClick}>Tentang</Link>
-              <Link to="#" className="hover:text-gray-400 px-4 py-2" onClick={handleMobileLinkClick}>Kontak</Link>
-            </>
+            // Tampilkan link "Home", "Tentang", dan "Kontak" hanya jika tidak di halaman login
+            location.pathname !== "/login" && (
+              <>
+                <Link to="/" className="hover:text-gray-400 px-4 py-2" onClick={handleMobileLinkClick}>Home</Link>
+                <Link to="#" className="hover:text-gray-400 px-4 py-2" onClick={handleMobileLinkClick}>Tentang</Link>
+                <Link to="#" className="hover:text-gray-400 px-4 py-2" onClick={handleMobileLinkClick}>Kontak</Link>
+              </>
+            )
           )}
 
           {/* Avatar dan Dropdown Profile untuk Mobile */}
